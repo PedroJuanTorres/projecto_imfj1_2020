@@ -253,8 +253,8 @@ class Mesh:
 
         return mesh
 
-        @staticmethod
-        def create_cpyramide(sides, mesh=None):
+    @staticmethod
+    def create_pyramide(sides, mesh=None):
             """
             Adds the n polygons necessary to form a pyramide with the given sides. If a source mesh is
             not given, a new mesh is created.
@@ -274,22 +274,36 @@ class Mesh:
             if mesh is None:
                 mesh = Mesh("UnknownPyramide")
 
-            # Add the 4 tru that create a pyramide with 3 sides
-            if(sides==3):
-                Mesh.create_tri(Vector3(-0.95, -0.95, 0),
-                                Vector3(0.95, 0, 0),
-                                Vector3(-0.95, 0.95, 0), mesh)
+            # Add the tri that create a pyramide with n sides
+            pontos = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            adding_angle = 360/sides
+            angle = 0
+            for index in range (1,sides+1):
+                pontos[index] = (0.5*math.cos(angle),0.5*math.sin(angle),-0.5)
+                angle = angle + adding_angle
 
-                Mesh.create_tri(Vector3(0.95, 0, 0),
-                                Vector3(0, 0, 2),
-                                Vector3(-0.95, 0.95, 0), mesh)
+            ponto_seguinte = 2
 
-                Mesh.create_tri(Vector3(-0.95, 0.95, 0),
-                                Vector3(0, 0, 2),
-                                Vector3(-0.95, -0.95, 0), mesh)
+            for index in range (1,sides+1):
+                Mesh.create_tri(Vector3(pontos[index][0],pontos[index][1] , pontos[index][2]),
+                                Vector3(0 ,0 ,0.5 ),
+                                Vector3(pontos[ponto_seguinte][0],pontos[ponto_seguinte][1] ,pontos[ponto_seguinte][2] ), mesh)
+                ponto_seguinte = ponto_seguinte+1
+                if(ponto_seguinte==sides):
+                    ponto_seguinte=1
+                
 
-                Mesh.create_tri(Vector3(-0.95, -0.95, 0),
-                                Vector3(0, 0, 2),
-                                Vector3(0.95, 0, 0), mesh)
+                """for index in range (sides):
+                Mesh.create_tri(Vector3(-0.5+(index*(-1)+2), -0.5+index/2, 0),
+                                Vector3(0, 0, 1),
+                                Vector3(0.5-((index/2)*(-1)+1.5*index), 0-(((index/2)*(-1)+1.5*index)*(-1.0)**index)/2, 0), mesh)"""
+                                
+                """Mesh.create_tri(Vector3(-0.5, 0.5, 0),
+                                Vector3(0, 0, 1),
+                                Vector3(-0.5, -0.5, 0), mesh)
+
+                Mesh.create_tri(Vector3(-0.5, -0.5, 0),
+                                Vector3(0, 0, 1),
+                                Vector3(0.5, 0, 0), mesh)"""
 
             return mesh
