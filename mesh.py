@@ -275,35 +275,29 @@ class Mesh:
                 mesh = Mesh("UnknownPyramide")
 
             # Add the tri that create a pyramide with n sides
-            pontos = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            adding_angle = 360/sides
+            pontos = []
+            adding_angle = 360/(sides)
+            radius = 0.5
             angle = 0
-            for index in range (1,sides+1):
-                pontos[index] = (0.5*math.cos(angle),0.5*math.sin(angle),-0.5)
+            next_ponto = 1
+
+            #First point has to star in angle 0, the next has to star depending on the number os sides
+            #For to create the number of points that we need in the basis
+            for index in range (sides):
+                pontos.append((radius*math.cos((angle/180)*math.pi),radius*math.sin((angle/180)*math.pi),-0.25))
                 angle = angle + adding_angle
-
-            ponto_seguinte = 2
-
-            for index in range (1,sides+1):
-                Mesh.create_tri(Vector3(pontos[index][0],pontos[index][1] , pontos[index][2]),
-                                Vector3(0 ,0 ,0.5 ),
-                                Vector3(pontos[ponto_seguinte][0],pontos[ponto_seguinte][1] ,pontos[ponto_seguinte][2] ), mesh)
-                ponto_seguinte = ponto_seguinte+1
-                if(ponto_seguinte==sides):
-                    ponto_seguinte=1
+                
                 
 
-                """for index in range (sides):
-                Mesh.create_tri(Vector3(-0.5+(index*(-1)+2), -0.5+index/2, 0),
-                                Vector3(0, 0, 1),
-                                Vector3(0.5-((index/2)*(-1)+1.5*index), 0-(((index/2)*(-1)+1.5*index)*(-1.0)**index)/2, 0), mesh)"""
-                                
-                """Mesh.create_tri(Vector3(-0.5, 0.5, 0),
-                                Vector3(0, 0, 1),
-                                Vector3(-0.5, -0.5, 0), mesh)
+            #For to create the number of Trianles that we need
 
-                Mesh.create_tri(Vector3(-0.5, -0.5, 0),
-                                Vector3(0, 0, 1),
-                                Vector3(0.5, 0, 0), mesh)"""
+            for index in range(len(pontos)):
+                Mesh.create_tri(Vector3(pontos[index][0],pontos[index][1] , pontos[index][2]),
+                            Vector3(0 ,0 ,0.25 ),
+                            Vector3(pontos[next_ponto][0],pontos[next_ponto][1] ,pontos[next_ponto][2] ), mesh)
+                next_ponto = next_ponto+1
+                if(next_ponto==len(pontos)):
+                    next_ponto=0
 
+     
             return mesh

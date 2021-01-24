@@ -37,7 +37,7 @@ def main():
     obj1 = Object3d("TestObject")
     obj1.scale = Vector3(1, 1, 1)
     obj1.position = Vector3(0, 0, 0)
-    obj1.mesh = Mesh.create_pyramide(4)
+    obj1.mesh = Mesh.create_pyramide(10)
     obj1.material = Material(Color(1, 0, 0, 1), "TestMaterial1")
     scene.add_object(obj1)
 
