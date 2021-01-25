@@ -169,22 +169,83 @@ class Mesh:
         Returns:
             {Mesh} - Mesh where the polygons were added
         """
-        # Create mesh if one was not given
+         # Create mesh if one was not given
         if mesh is None:
             mesh = Mesh("UnknownSphere")
 
-       
-        Mesh.create_tri(Vector3(0.5, 0, 0),
-                        Vector3(0, 0, 1),
-                        Vector3(-0.5, 0.5, 0), mesh)
+        # Compute half-size
+        if isinstance(size, Vector3):
+            hs = size * 0.5
+        else:
+            hs = Vector3(size[0], size[1], size[2]) * 0.5
 
-        Mesh.create_tri(Vector3(-0.5, 0.5, 0),
-                        Vector3(0, 0, 1),
-                        Vector3(-0.5, -0.5, 0), mesh)
+        # Sphere is going to be composed by quads in most of the surface, but triangles near the
+        # poles, so compute the bottom and top vertex
+        bottom_vertex = Vector3(0, -hs.y, 0)
+        top_vertex = Vector3(0, hs.y, 0)
 
-        Mesh.create_tri(Vector3(-0.5, -0.5, 0),
-                        Vector3(0, 0, 1),
-                        Vector3(0.5, 0, 0), mesh)
+        lat_inc = math.pi / res_lat
+        lon_inc = math.pi * 2 / res_lon
+        # First row of triangles
+        lat = -math.pi / 2
+        lon = 0
+
+        y = hs.y * math.sin(lat + lat_inc)
+        c = math.cos(lat + lat_inc)
+        for _ in range(0, res_lon):
+            p1 = Vector3(c * math.cos(lon) * hs.x, y, c * math.sin(lon) * hs.z)
+            p2 = Vector3(c * math.cos(lon + lon_inc) * hs.x, y, c * math.sin(lon + lon_inc) * hs.z)
+
+            Mesh.create_tri(bottom_vertex, p1, p2, mesh)
+
+            lon += lon_inc
+
+        # Quads in the middle
+        for _ in range(1, res_lat - 1):
+            lat += lat_inc
+
+            y1 = hs.y * math.sin(lat)
+            y2 = hs.y * math.sin(lat + lat_inc)
+            c1 = math.cos(lat)
+            c2 = math.cos(lat + lat_inc)
+
+            lon = 0
+            for _ in range(0, res_lon):
+                p1 = Vector3(c1 * math.cos(lon) * hs.x,
+                             y1,
+                             c1 * math.sin(lon) * hs.z)
+                p2 = Vector3(c1 * math.cos(lon + lon_inc) * hs.x,
+                             y1,
+                             c1 * math.sin(lon + lon_inc) * hs.z)
+                p3 = Vector3(c2 * math.cos(lon) * hs.x,
+                             y2,
+                             c2 * math.sin(lon) * hs.z)
+                p4 = Vector3(c2 * math.cos(lon + lon_inc) * hs.x,
+                             y2,
+                             c2 * math.sin(lon + lon_inc) * hs.z)
+
+                poly = []
+                poly.append(p1)
+                poly.append(p2)
+                poly.append(p4)
+                poly.append(p3)
+
+                mesh.polygons.append(poly)
+
+                lon += lon_inc
+
+        # Last row of triangles
+        lat += lat_inc
+        y = hs.y * math.sin(lat)
+        c = math.cos(lat)
+        for _ in range(0, res_lon):
+            p1 = Vector3(c * math.cos(lon) * hs.x, y, c * math.sin(lon) * hs.z)
+            p2 = Vector3(c * math.cos(lon + lon_inc) * hs.x, y, c * math.sin(lon + lon_inc) * hs.z)
+
+            Mesh.create_tri(top_vertex, p1, p2, mesh)
+
+            lon += lon_inc
+
         return mesh
 
 
@@ -284,7 +345,7 @@ class Mesh:
             #First point has to star in angle 0, the next has to star depending on the number os sides
             #For to create the number of points that we need in the basis
             for index in range (sides):
-                pontos.append((radius*math.cos((angle/180)*math.pi),radius*math.sin((angle/180)*math.pi),-0.25))
+                pontos.append((radius*math.cos((angle/180)*math.pi),radius*math.sin((angle/180)*math.pi),-0.6))
                 angle = angle + adding_angle
                 
                 
@@ -293,7 +354,7 @@ class Mesh:
 
             for index in range(len(pontos)):
                 Mesh.create_tri(Vector3(pontos[index][0],pontos[index][1] , pontos[index][2]),
-                            Vector3(0 ,0 ,0.25 ),
+                            Vector3(0 ,0 ,0.6 ),
                             Vector3(pontos[next_ponto][0],pontos[next_ponto][1] ,pontos[next_ponto][2] ), mesh)
                 next_ponto = next_ponto+1
                 if(next_ponto==len(pontos)):

@@ -65,6 +65,26 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     return
+                elif event.key == pygame.K_RIGHT:
+                    return
+                elif event.key == pygame.K_LEFT:
+                    return
+                elif event.key == pygame.K_UP:
+                    return
+                elif event.key == pygame.K_DOWN:
+                    return
+                elif event.key == pygame.K_W:
+                    return
+                elif event.key == pygame.K_S:
+                    return
+                elif event.key == pygame.K_A:
+                    return
+                elif event.key == pygame.K_D:
+                    return
+                elif event.key == pygame.K_Q:
+                    return
+                elif event.key == pygame.K_E:
+                    return
 
         # Clears the screen with a very dark blue (0, 0, 20)
         screen.fill((0, 0, 0))
@@ -76,7 +96,6 @@ def main():
         obj1.rotation = q * obj1.rotation
 
         scene.render(screen)
-
         # Swaps the back and front buffer, effectively displaying what we rendered
         pygame.display.flip()
 
