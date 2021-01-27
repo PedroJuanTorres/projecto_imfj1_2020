@@ -1,5 +1,5 @@
 # Projeto Final de Introdução à matemática e Física para Videojogos I
-Este relatório resumi o trabalho feito para o projeto.
+Este relatório resume o trabalho feito para a conclusão do projeto final.
 Também contém informações do github e objetivos não atingidos com o trabalho
 
 ## Trabalho Feito
@@ -29,13 +29,19 @@ Em relação a fracasso destes pontos: acredito que o motivo tenha sido que deix
 
 ### Dificuldades
 * A construção da pirâmide de n lados:
+
     A construção de uma pirâmide qualquer não foi muito difícil, porém quando foi preciso construir uma pirâmide de n lados, foi necessário bastante tempo para a conclusão
+
 * Bugs em relação a precionar a tecla e fazer a ação:
+
     Tive este bug no qual ao pressionar as setas ou pageup e pagedown a ação só ocorria uma única vez e após muitas dúvidas esclarecidas com o professor Diogo pelo Discord, consegui compreender o erro.
 
 ## Github e Informações
 
 link do repositório no github: (https://github.com/PedroJuanTorres/projecto_imfj1_2020)
+
 Nome do Aluno: Pedro Juan Torres
+
 Número de aluno: 22007890
+
 Nome do aluno no Github: PedroJuanTorres
