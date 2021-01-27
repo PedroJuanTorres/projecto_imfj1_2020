@@ -37,7 +37,7 @@ def main():
     obj1 = Object3d("TestObject")
     obj1.scale = Vector3(1, 1, 1)
     obj1.position = Vector3(0, 0, 0)
-    obj1.mesh = Mesh.create_pyramide(7)
+    obj1.mesh = Mesh.create_pyramide(5)
     obj1.material = Material(Color(1, 0, 0, 1), "TestMaterial1")
     scene.add_object(obj1)
 
@@ -59,71 +59,77 @@ def main():
             if event.type == pygame.QUIT:
                 # Exits the application immediately
                 return
-            key_state = pygame.key.get_pressed()
+            
+        key_state = pygame.key.get_pressed()
 
-            if key_state[pygame.K_ESCAPE]:
-               return
+        if key_state[pygame.K_ESCAPE]:
+            return
          
-            elif key_state[pygame.K_k]:
-                angle = 15
-                axis = Vector3(0, 1, 0)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_LEFT]:
+            angle = 0.3
+            axis = Vector3(0, 1, 0)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_LEFT]:
-                angle = -15
-                axis = Vector3(0, 1, 0)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_RIGHT]:
+            angle = -0.3
+            axis = Vector3(0, 1, 0)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_UP]:
-                angle = -15
-                axis = Vector3(1, 0, 0)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_DOWN]:
+            angle = -0.3
+            axis = Vector3(1, 0, 0)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_DOWN]:
-                angle = 15
-                axis = Vector3(1, 0, 0)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_UP]:
+            angle = 0.3
+            axis = Vector3(1, 0, 0)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_PAGEUP]:
-                angle = 15
-                axis = Vector3(0, 0, 2)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_PAGEUP]:
+            angle = 0.3
+            axis = Vector3(0, 0, 2)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_PAGEDOWN]:
-                angle = -15
-                axis = Vector3(0, 0, 1)
-                axis.normalize()
-                ax = (axis * math.radians(angle) * 0.2)
+        if key_state[pygame.K_PAGEDOWN]:
+            angle = -0.3
+            axis = Vector3(0, 0, 1)
+            axis.normalize()
+            ax = (axis * math.radians(angle) * 0.2)
+            q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
+            obj1.rotation = q * obj1.rotation
 
-                q = Quaternion.AngleAxis(axis, math.radians(angle) * 0.2)
-                obj1.rotation = q * obj1.rotation
-            elif key_state[pygame.K_w]:
-                obj1.position=Vector3(obj1.position.x,obj1.position.y+0.01,obj1.position.z)
-            elif key_state[pygame.K_s]:
-                obj1.position=Vector3(obj1.position.x,obj1.position.y-0.01,obj1.position.z)
-            elif key_state[pygame.K_a]:
-                obj1.position=Vector3(obj1.position.x-0.01,obj1.position.y,obj1.position.z)
-            elif key_state[pygame.K_d]:
-                obj1.position=Vector3(obj1.position.x+0.01,obj1.position.y,obj1.position.z)
-            elif key_state[pygame.K_q]:
-                obj1.position=Vector3(obj1.position.x,obj1.position.y,obj1.position.z+0.01)
-            elif key_state[pygame.K_e]:
-                obj1.position=Vector3(obj1.position.x,obj1.position.y,obj1.position.z-0.01)
+        if key_state[pygame.K_w]:
+            obj1.position=Vector3(obj1.position.x,obj1.position.y+0.0005,obj1.position.z)
+
+        if key_state[pygame.K_s]:
+            obj1.position=Vector3(obj1.position.x,obj1.position.y-0.0005,obj1.position.z)
+
+        if key_state[pygame.K_a]:
+            obj1.position=Vector3(obj1.position.x-0.0005,obj1.position.y,obj1.position.z)
+
+        if key_state[pygame.K_d]:
+            obj1.position=Vector3(obj1.position.x+0.0005,obj1.position.y,obj1.position.z)
+
+        if key_state[pygame.K_q]:
+            obj1.position=Vector3(obj1.position.x,obj1.position.y,obj1.position.z+0.0005)
+
+        if key_state[pygame.K_e]:
+            obj1.position=Vector3(obj1.position.x,obj1.position.y,obj1.position.z-0.0005)
 
         # Clears the screen with a very dark blue (0, 0, 20)
         screen.fill((0, 0, 0))
